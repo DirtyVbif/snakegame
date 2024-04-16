@@ -1,0 +1,49 @@
+# Order deny,allow
+# Deny from all
+# Allow from 0.0.0.0
+
+# AuthType Basic
+# AuthName "Password Protected Area"
+# AuthUserFile /home/u/username/site.folder/public_html/.htpasswd
+# Require valid-user
+
+# Follow symbolic links in this directory.
+Options +FollowSymLinks
+
+# ErrorDocument 401 /errors/401
+# ErrorDocument 403 /errors/403
+# ErrorDocument 404 /errors/404
+# ErrorDocument 500 /errors/500
+
+# Set the default handler.
+DirectoryIndex index.php
+AddDefaultCharset UTF-8
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # To redirect all users to access the site WITHOUT the 'www.' prefix,
+    # (http://www.example.com/foo will be redirected to http://example.com/foo)
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ http%{ENV:protossl}://%1%{REQUEST_URI} [L,R=301]
+
+    # --------------------------------------------------------------------------
+    # HTTPS Redirect
+    # --------------------------------------------------------------------------
+    # RewriteCond %{HTTPS} !on
+    # RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+    RewriteCond %{HTTPS} on
+    RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+    # --------------------------------------------------------------------------
+    # Redirect all requests except sources to index.php
+    # --------------------------------------------------------------------------
+    RewriteCond %{REQUEST_URI} !\.(gif|jpe?g|png|webp|ico|js|css|svg)$ [NC]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L]
+</IfModule>

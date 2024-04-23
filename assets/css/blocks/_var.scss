@@ -1,0 +1,62 @@
+// FONT ----------------------------------------->
+$font: 400 16px/1.4 'Montserrat', sans-serif;
+$font_code: 200 16px/1.35 'Source Sans Pro', monospace;
+// <----------------------------------------------
+
+// VIEWPORT WIDTH BREAKPOINTS ------------------->
+$vwbp_min: 280px;
+$vwbp_xs: 480px;
+$vwbp_s: 600px;
+$vwbp_m: 768px;
+$vwbp_l: 992px;
+$vwbp_xl: 1200px;
+$vwbp_max: 1920px;
+// <----------------------------------------------
+
+// COLORS --------------------------------------->
+$txt: #171717;
+$phantom: #27292c;
+$phantom_blue: #323644;
+$white: #f7f7f7;
+$document: #e2efe9;
+$blue: #6666c7;
+$blue_hover: #3e3ecc;
+$blue_light: #8a8adf;
+$blue_bright: #bcbcf5;
+$link: #a87704;
+$link_hover: #ca8f06;
+$link_visited: #6b5319;
+$yellow_tera: #e3d586;
+$yellow_unsaved: #fff05dcf;
+$grey_light: #c2ccd3;
+$grey_bright: #d1dae0;
+$grey_very_light: #e4ecf1;
+$grey: #898d90;
+$grey_strong: #6d7174;
+$grey_hard: #4f5255;
+$unpublished: #ffe2ea;
+$red: #dd271a;
+$red_hover: #dd6158;
+$red_medium: #993b34;
+$phantom: #4c5058;
+$green: #138b25;
+$green_hover: #048016;
+$green_light: #3abb4d;
+$green_bright: #5edb71;
+$green_very_light: #6de56e;
+$orange: #ff7f00;
+$orange_light: #fd9124;
+$admin_layout: #e0dca8;
+$admin_layout_alt: #e1e3b6;
+$admin_layout_light: #eeefd9;
+$admin_layout_semilight: #e3e4cf;
+// <----------------------------------------------
+
+// STYLES --------------------------------------->
+$shadow_size: 0 0 7px -2px;
+$shadow: $shadow_size $grey_light;
+$transition: .15s all ease-in-out;
+$radius: 3px;
+$admin_bar_h: 40px;
+$data_title_arrow_size: 4px;
+// <----------------------------------------------

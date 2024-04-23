@@ -1,0 +1,50 @@
+.hidden {
+    display: none!important;
+}
+
+.visually-hidden {
+    visibility: hidden;
+    position: absolute;
+    z-index: -999;
+    left: -9999px;
+}
+
+.cl {
+    @include cl();
+}
+
+.loading {
+    display: block;
+    background-image: url('/icons/loading.svg');
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    top: calc(50% - 16px);
+    left: calc(50% - 16px);
+    animation-name: loading-8-step-round;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: steps(8, jump-start);
+}
+
+.unpublished,
+.published {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: $radius;
+    border: 1px solid $grey_light;
+}
+
+.published {
+    border-color: $grey_strong;
+    text-align: center;
+    &::after {
+        color: $grey_strong;
+        content: "✓";
+    }
+}
+
+.bold {
+    font-weight: bold;
+}

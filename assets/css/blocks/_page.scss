@@ -1,0 +1,13 @@
+.page
+{
+    margin:     0;
+    background: $document;
+
+    &__main
+    {
+        @include container();
+        @include block();
+
+        margin-top: 60px;
+    }
+}

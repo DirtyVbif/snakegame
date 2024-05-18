@@ -3,7 +3,7 @@
 const src = {
     assets: {
         css: 'assets/css/**/*.+(scss|sass)',
-        js: 'assets/js/**/*.js',
+        js:  'assets/js/**/*.js',
         img: 'assets/img/**/*.+(png|jpg|webp|tiff)'
     },
     dest: {
@@ -82,7 +82,7 @@ function js() {
         //.pipe(addHeader('"use strict";'))
         //.pipe(minifyJS())
         .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest(src.dest.pub));
+         .pipe(gulp.dest(src.dest.pub));
 }
 
 // =====================================================================

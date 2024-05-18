@@ -5,6 +5,25 @@ class MUCanvas
      */
     #canvas;
 
+    #initialized = false;
+
+    /**
+     * @type {MUCanvasSize}
+     */
+    #size;
+
+    /**
+     * @returns {MUCanvasSize}
+     */
+    get size ()
+    {
+        if (!this.#size) {
+            this.#size = new MUCanvasSize(this.#canvas);
+        }
+
+        return this.#size;
+    }
+
     /**
      * @param {HTMLCanvasElement} canvas
      */
@@ -15,7 +34,10 @@ class MUCanvas
 
     initialize ()
     {
-        this.#canvas.width = 540;
-        this.#canvas.height = 540;
+        if (!this.#initialized) {
+            this.size.update();
+            MUDoc.resize(this.size.update.bind(this.size));
+            this.#initialized = true;
+        }
     }
 }

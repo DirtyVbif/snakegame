@@ -7,5 +7,5 @@
         <?= view('blocks/copyrights') ?>
     </footer>
 
-    <script src="/js/script.min.js?v=<?= time() ?>"></script>
+    <script src="/js/script.min.js"></script>
 </body>

@@ -3,29 +3,40 @@ class MUDoc
     /**
      * @type {function[]}
      */
-    #onready = [];
+    static #on_ready = [];
 
-    #is_ready = false;
+    static #is_ready = false;
+
+    static #initialized = false;
 
     /**
      * @param {function} callback
      */
-    static ready (callback)
+    static ready(callback)
     {
+        this.#initialize();
         if (!this.#is_ready) {
-            this.#onready.push(callback);
+            this.#on_ready.push(callback);
         } else {
             callback();
         }
     }
 
-    static complete ()
+    static #initialize()
+    {
+        if (!this.#initialized) {
+            this.#initialized = true;
+            window.onload     = this.complete.bind(this);
+        }
+    }
+
+    static complete()
     {
         if (!this.#is_ready) {
             this.#is_ready = true;
-            this.#onready.forEach(callback => callback());
-            this.#onready = undefined;
-            console.log('MUDoc.complete() called');
+            this.#initialize();
+            this.#on_ready.forEach(callback => callback());
+            this.#on_ready = undefined;
         }
     }
 }

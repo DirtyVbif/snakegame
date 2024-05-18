@@ -95,7 +95,7 @@ function js() {
         // gulp.src(src.assets.js, opt.src)
         .pipe(concat('script.js'))
         .pipe(addHeader('"use strict";\n'))
-        .pipe(minifyJS())
+        // .pipe(minifyJS())
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest(src.dest.pub + 'js/'));
 }

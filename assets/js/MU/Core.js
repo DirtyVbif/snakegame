@@ -53,5 +53,6 @@ class MUCore
     static initialize ()
     {
         // TODO: initialize main canvas and controls handlers
+        this.canvas.initialize();
     }
 }

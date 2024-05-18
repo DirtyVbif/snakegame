@@ -3,20 +3,22 @@
 // Z-INDEX <--------------------------------------
 
 // MIXINS AND VARIABLES ------------------------->
-@import 'blocks/var';
-@import 'blocks/mixins';
+@import "blocks/var";
+@import "blocks/mixins";
 // <----------------------------------------------
 
 // FONTS -------------- ------------------------->
-@import 'font-montserrat';
-@import 'font-source-sans-pro';
+@import "font-montserrat";
+@import "font-source-sans-pro";
 // <----------------------------------------------
 
 // DEFAULT STYLES ------------------------------->
-@import 'blocks/html';
-@import 'blocks/defaults';
+@import "blocks/html";
+@import "blocks/defaults";
+@import "blocks/flex";
 // <----------------------------------------------
 
 // BLOCKS STYLES -------------------------------->
-@import 'blocks/page';
+@import "blocks/page";
+@import "blocks/copyrights";
 // <----------------------------------------------

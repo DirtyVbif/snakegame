@@ -1,9 +1,13 @@
 # snakegame
 Browser classic snake game
 
-## Developing roadmap
+## Maintaining roadmap
 - [ ] Create base interface with HTML/JS
+- - [ ] Add dark/light themes
+- - [ ] Add maximize window tool
+- - [ ] Add local scoring storage
 - [ ] Add languages
-- [ ] Add server authorization for individual scoring
-- [ ] Create protection from cheating
+- [ ] Add adaptation for mobiles
 - [ ] Add online leaderboards
+- - [ ] Add server authorization
+- - [ ] Create protection from cheating

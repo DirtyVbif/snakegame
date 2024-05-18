@@ -1,47 +1,51 @@
 // =====================================================================
 // project settings
 const src = {
-    assets: {
-        css: 'assets/css/**/*.+(scss|sass)',
-        js:  'assets/js/**/*.js',
-        img: 'assets/img/**/*.+(png|jpg|webp|tiff)'
+        assets: {
+            css: 'assets/css/**/*.+(scss|sass)',
+            js:  [
+                'assets/js/*/**/*.js',
+                'assets/js/*.js',
+            ],
+            img: 'assets/img/**/*.+(png|jpg|webp|tiff)'
+        },
+        dest: {
+            pub: 'public/',
+            img: 'public/images/'
+        }
     },
-    dest: {
-        pub: 'public/',
-        img: 'public/images/'
-    }
-},
-opt = {
-    css: {
-        // "sourcemap=none": true,
-        // noCache: true,
-        // compass: true,
-        // style: sassStyle,
-        // lineNumbers: false,
-        outputStyle: 'expanded'
+    opt = {
+        css: {
+            // "sourcemap=none": true,
+            // noCache: true,
+            // compass: true,
+            // style: sassStyle,
+            // lineNumbers: false,
+            outputStyle: 'expanded'
+        },
+        src:  {
+            base: 'assets/',
+            sourcemap: true
+        },
+        img: {
+            base: 'assets/img/',
+            sourcemap: true
+        }
     },
-    src:  {
-        base: 'assets/',
-        sourcemap: true
-    },
-    img: {
-        base: 'assets/img/',
-        sourcemap: true
-    }
-},
-// =====================================================================
-// gulp packages
-gulp         = require('gulp'),
-sass         = require('gulp-sass')(require('sass')),
-minifyJS     = require('gulp-terser'),
-autoPrefixer = require('gulp-autoprefixer'),
-rename       = require('gulp-rename'),
-delFiles     = require('del'),
-cssMin       = require('gulp-csso'),
-concat       = require('gulp-concat'),
-addHeader    = require('gulp-header'),
-// addFooter    = require('gulp-footer'),
-webp = require('gulp-webp');
+    // =====================================================================
+    // gulp packages
+    gulp         = require('gulp'),
+    sass         = require('gulp-sass')(require('sass')),
+    minifyJS     = require('gulp-terser'),
+    autoPrefixer = require('gulp-autoprefixer'),
+    rename       = require('gulp-rename'),
+    delFiles     = require('del'),
+    cssMin       = require('gulp-csso'),
+    concat       = require('gulp-concat'),
+    addHeader    = require('gulp-header'),
+    streamqueue  = require('streamqueue'),
+    // addFooter    = require('gulp-footer'),
+    webp = require('gulp-webp');
 
 // =====================================================================
 //clean target directories
@@ -61,11 +65,16 @@ function css() {
         .pipe(
             sass(opt.css)
                 .on('error', sass.logError)
-        ).pipe(autoPrefixer())
+        )
+        .pipe(autoPrefixer())
         .pipe(cssMin())
-        .pipe(rename({
-            suffix: '.min'
-        }))
+        .pipe(
+            rename(
+                {
+                    suffix: '.min'
+                }
+            )
+        )
         .pipe(gulp.dest(src.dest.pub));
 }
 
@@ -78,11 +87,17 @@ function watch_css() {
 // =====================================================================
 // minifine and put main.js scripts into target directories
 function js() {
-    return gulp.src(src.assets.js, opt.src)
-        //.pipe(addHeader('"use strict";'))
-        //.pipe(minifyJS())
+    return streamqueue(
+            { objectMode: true },
+            gulp.src(src.assets.js[0]),
+            gulp.src(src.assets.js[1])
+        )
+        // gulp.src(src.assets.js, opt.src)
+        .pipe(concat('script.js'))
+        .pipe(addHeader('"use strict";\n'))
+        .pipe(minifyJS())
         .pipe(rename({ suffix: '.min' }))
-         .pipe(gulp.dest(src.dest.pub));
+        .pipe(gulp.dest(src.dest.pub + 'js/'));
 }
 
 // =====================================================================

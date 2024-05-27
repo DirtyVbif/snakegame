@@ -28,7 +28,7 @@ class MUCanvasSize
             steps      = Math.floor(free_space / this.#step),
             size       = this.#step * steps;
 
-        this.#set(size);
+        this.#setWidth(size);
     }
 
     /**
@@ -45,7 +45,7 @@ class MUCanvasSize
             - parseFloat(styles.paddingRight);
     }
 
-    #set (width)
+    #setWidth (width)
     {
         this.#canvas.width = width;
         this.#updateHeight();
@@ -64,11 +64,8 @@ class MUCanvasSize
 
     #updateHeight ()
     {
-        this.#set(
-            this.#canvas.width,
-            this.#grid.width === this.#grid.height
-                ? this.#canvas.width
-                : this.#canvas.width / this.#grid.width * this.#grid.height
-        );
+        this.#canvas.height = (this.#grid.width === this.#grid.height)
+            ? this.#canvas.width
+            : this.#canvas.width / this.#grid.width * this.#grid.height
     }
 }

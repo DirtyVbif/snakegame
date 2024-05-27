@@ -83,7 +83,7 @@ class MUDoc
     }
 
     /**
-     * @param {NodeListOf<EventTarget>|EventTarget|string} target
+     * @param {NodeListOf<EventTarget>|EventTarget[]|EventTarget|string} target
      * @param {string[]|string} type
      * @param {function} callback
      * @param {boolean} passive
@@ -98,7 +98,7 @@ class MUDoc
         if (typeof target === 'string') {
             target = document.querySelectorAll(target);
         }
-        if (target instanceof NodeList) {
+        if (target instanceof NodeList || target instanceof Array) {
             target.forEach(
                 event_target => this.event(event_target, type, callback, passive)
             );
@@ -106,7 +106,7 @@ class MUDoc
             type.forEach(
                 t => this.event(target, t, callback, passive)
             );
-        } else {
+        } else if (target) {
             target.addEventListener(type, callback, passive ? {passive: true} : null)
         }
     }
@@ -114,7 +114,7 @@ class MUDoc
     /**
      * An alias for event() method with `click` event type.
      *
-     * @param {NodeListOf<EventTarget>|EventTarget|string} target
+     * @param {NodeListOf<EventTarget>|EventTarget[]|EventTarget|string} target
      * @param {function} callback
      * @param {boolean} passive
      */

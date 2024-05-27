@@ -7,6 +7,7 @@ class MUCore
     {
         return {
             id: {
+                board:  'board',
                 canvas: 'board-canvas'
             }
         };
@@ -25,7 +26,7 @@ class MUCore
     static get game ()
     {
         if (!this.#game) {
-            this.#game = new MUCoreGame();
+            this.#game = new MUCoreGame(document.getElementById(this.c.id.board));
         }
 
         return this.#game;
@@ -54,5 +55,6 @@ class MUCore
     {
         // TODO: initialize main canvas and controls handlers
         this.canvas.initialize();
+        this.game.initialize();
     }
 }

@@ -6,7 +6,20 @@ class MUCanvasShape
 
     #color = '#ffffff';
 
+    /**
+     * @type {MUCanvasShapeBorder}
+     */
     #border;
+
+    static get circle ()
+    {
+        return new MUCanvasShapeCircle();
+    }
+
+    static get rectangle ()
+    {
+        return new MUCanvasShapeRectangle();
+    }
 
     get x ()
     {
@@ -18,6 +31,9 @@ class MUCanvasShape
         return this.#y;
     }
 
+    /**
+     * @returns {MUCanvasShapeBorder}
+     */
     get border ()
     {
         if (!this.#border) {
@@ -61,9 +77,11 @@ class MUCanvasShape
     }
 
     /**
-     * @param {MUCanvas} canvas HTML canvas API instance
+     * @param {CanvasRenderingContext2D} context HTML canvas 2D context API
+     *
+     * @returns {void|never}
      */
-    render (canvas)
+    render (context)
     {
         // This is abstract method that must be implemented
         throw new Error("Method MUCanvasShape.render() must be implemented.");

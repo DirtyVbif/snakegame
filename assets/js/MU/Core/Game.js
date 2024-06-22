@@ -58,6 +58,7 @@ class MUCoreGame
         this.#loading(true);
         this.#initializeControls();
         this.#initializeEvents();
+        this.#viewStartScreen();
     }
 
     #initializeControls ()
@@ -132,5 +133,10 @@ class MUCoreGame
         // TODO: create control events handlers
 
         // TODO: create ticks
+    }
+
+    #viewStartScreen ()
+    {
+        // TODO: render first screen
     }
 }

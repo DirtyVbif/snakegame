@@ -8,13 +8,23 @@ class MUCanvasSize
     #step = 100;
 
     #grid = {
-        min: 10,
-        width: 24,
+        min:    10,
+        width:  24,
         height: 24,
         locked: false
     };
 
     #parent_resized_width = 0;
+
+    get width ()
+    {
+        return this.#canvas.width;
+    }
+
+    get height ()
+    {
+        return this.#canvas.height;
+    }
 
     get #parent_width_changed ()
     {
@@ -84,7 +94,7 @@ class MUCanvasSize
     #updateHeight ()
     {
         this.#canvas.height = (this.#grid.width === this.#grid.height)
-            ? this.#canvas.width
-            : this.#canvas.width / this.#grid.width * this.#grid.height
+            ? this.width
+            : this.width / this.#grid.width * this.#grid.height
     }
 }

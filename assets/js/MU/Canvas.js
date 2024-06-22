@@ -13,9 +13,9 @@ class MUCanvas
     #size;
 
     /**
-     * @type {MUCanvasShape[]}
+     * @type {{MUCanvasShape}}
      */
-    #shapes = [];
+    #shapes = {};
 
     /**
      * @returns {MUCanvasSize}
@@ -27,6 +27,14 @@ class MUCanvas
         }
 
         return this.#size;
+    }
+
+    /**
+     * @returns {CanvasRenderingContext2D}
+     */
+    get context ()
+    {
+        return this.#canvas.getContext('2d');
     }
 
     /**
@@ -44,5 +52,40 @@ class MUCanvas
             MUDoc.resize(this.size.update.bind(this.size));
             this.#initialized = true;
         }
+    }
+
+    clear ()
+    {
+        this.context.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
+    }
+
+    draw ()
+    {
+        Object.keys(this.#shapes).forEach(
+            key => this.#shapes[key].render(this.context)
+        );
+    }
+
+    redraw ()
+    {
+        this.clear();
+        this.draw();
+    }
+
+    /**
+     *
+     * @param key
+     * @param shape
+     * @returns {MUCanvas|MUCanvasShape|undefined}
+     */
+    shape (key, shape = undefined)
+    {
+        if (shape) {
+            this.#shapes[key] = shape;
+
+            return this;
+        }
+
+        return this.#shapes[key];
     }
 }

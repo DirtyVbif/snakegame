@@ -1,0 +1,2 @@
+class MUCanvasShapeCircle extends MUCanvasShape
+{}

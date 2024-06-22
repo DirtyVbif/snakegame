@@ -13,6 +13,11 @@ class MUCanvas
     #size;
 
     /**
+     * @type {MUCanvasShape[]}
+     */
+    #shapes = [];
+
+    /**
      * @returns {MUCanvasSize}
      */
     get size ()

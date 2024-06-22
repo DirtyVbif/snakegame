@@ -1,0 +1,2 @@
+class MUCanvasShapeRectangle extends MUCanvasShape
+{}

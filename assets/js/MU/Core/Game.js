@@ -55,6 +55,7 @@ class MUCoreGame
 
     initialize ()
     {
+        this.#loading(true);
         this.#initializeControls();
         this.#initializeEvents();
     }
@@ -70,6 +71,11 @@ class MUCoreGame
             this.#action_start,
             event => this.#start(event)
         );
+    }
+
+    #loading (statement)
+    {
+        MUDoc.loading(this.#board, !statement);
     }
 
     #start (event)

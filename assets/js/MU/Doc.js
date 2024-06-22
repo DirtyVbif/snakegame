@@ -119,4 +119,13 @@ class MUDoc
     {
         this.event(target, 'click', callback, passive);
     }
+
+    static loading (element, complete = false)
+    {
+        if (complete) {
+            MUDocPreloader.get(element)?.destroy();
+        } else {
+            MUDocPreloader.set(element);
+        }
+    }
 }

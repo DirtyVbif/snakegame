@@ -1,4 +1,4 @@
-<div class="board" id="board">
+<div class="board flex flex_center flex_column" id="board">
     <header class="board__controls">
         <button id="board-play" class="board__control board__control_play">Start</button>
     </header>

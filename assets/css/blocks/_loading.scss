@@ -1,0 +1,34 @@
+.loading
+{
+    position: relative;
+
+    &__block
+    {
+        display:    block;
+        position:   absolute;
+        cursor:     not-allowed;
+        top:        0;
+        left:       0;
+        width:      100%;
+        height:     100%;
+        max-width:  100vw;
+        max-height: 100vh;
+        z-index:    1000;
+    }
+
+    &__animation
+    {
+        display:                   block;
+        background-image:          url(/icons/loading.svg);
+        position:                  absolute;
+        width:                     32px;
+        height:                    32px;
+        top:                       calc(50% - 16px);
+        left:                      calc(50% - 16px);
+        animation-name:            loading-8-step-round;
+        animation-duration:        1.2s;
+        animation-iteration-count: infinite;
+        animation-timing-function: steps(8, jump-start);
+        z-index:                   1000;
+    }
+}

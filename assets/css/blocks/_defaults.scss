@@ -13,20 +13,6 @@
     @include cl();
 }
 
-.loading {
-    display: block;
-    background-image: url('/icons/loading.svg');
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    top: calc(50% - 16px);
-    left: calc(50% - 16px);
-    animation-name: loading-8-step-round;
-    animation-duration: 1.2s;
-    animation-iteration-count: infinite;
-    animation-timing-function: steps(8, jump-start);
-}
-
 .unpublished,
 .published {
     display: inline-block;

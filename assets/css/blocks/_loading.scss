@@ -6,7 +6,7 @@
     {
         display:    block;
         position:   absolute;
-        cursor:     not-allowed;
+        cursor:     none;
         top:        0;
         left:       0;
         width:      100%;
@@ -19,7 +19,7 @@
     &__animation
     {
         display:                   block;
-        background-image:          url(/icons/loading.svg);
+        background-image:          url("/icons/loading.svg");
         position:                  absolute;
         width:                     32px;
         height:                    32px;

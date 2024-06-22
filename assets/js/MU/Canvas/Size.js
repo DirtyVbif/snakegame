@@ -14,6 +14,23 @@ class MUCanvasSize
         locked: false
     };
 
+    #parent_resized_width = 0;
+
+    get #parent_width_changed ()
+    {
+        let width   = parseFloat(this.parent_styles.width),
+            changed = width !== this.#parent_resized_width;
+
+        this.#parent_resized_width = width;
+
+        return changed;
+    }
+
+    get parent_styles ()
+    {
+        return getComputedStyle(this.#canvas.parentElement);
+    }
+
     /**
      * @param {HTMLCanvasElement} canvas
      */
@@ -24,11 +41,13 @@ class MUCanvasSize
 
     update ()
     {
-        let free_space = this.#calculateFreeSpace(),
-            steps      = Math.floor(free_space / this.#step),
-            size       = this.#step * steps;
+        if (this.#parent_width_changed) {
+            let free_space = this.#calculateFreeSpace(),
+                steps      = Math.floor(free_space / this.#step),
+                size       = this.#step * steps;
 
-        this.#setWidth(size);
+            this.#setWidth(size);
+        }
     }
 
     /**
@@ -36,7 +55,7 @@ class MUCanvasSize
      */
     #calculateFreeSpace ()
     {
-        let styles = getComputedStyle(this.#canvas.parentElement);
+        let styles = this.parent_styles;
 
         return parseFloat(styles.width)
             - parseFloat(styles.borderLeftWidth)

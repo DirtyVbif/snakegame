@@ -13,11 +13,6 @@ class MUDoc
 
     static #resize_timestamp = 0;
 
-    /**
-     * Resize threshold in milliseconds that detects end or pause of resize event to evaluate resize callbacks
-     */
-    static #resize_threshold = 50;
-
     static get is_ready ()
     {
         return this.#is_ready || document.readyState === 'complete';
@@ -75,9 +70,7 @@ class MUDoc
     static #evaluateResize (event)
     {
         if (this.#on_resize.length > 0) {
-            if ((event.timeStamp - this.#resize_timestamp) > this.#resize_threshold) {
-                this.#callEach(this.#on_resize, event);
-            }
+            this.#callEach(this.#on_resize, event);
             this.#resize_timestamp = event.timeStamp;
         }
     }

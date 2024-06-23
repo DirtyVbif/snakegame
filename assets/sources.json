@@ -1,0 +1,25 @@
+{
+    "js": {
+        "name":      "script.min.js",
+        "directory": "public/js/",
+        "files":     [
+            "assets/js/MU/Doc/Preloader.js",
+            "assets/js/MU/Doc.js",
+            "assets/js/MU/Canvas/Point.js",
+            "assets/js/MU/Canvas/Dummy.js",
+            "assets/js/MU/Canvas/Shape/Border.js",
+            "assets/js/MU/Canvas/Shape.js",
+            "assets/js/MU/Canvas/Shape/Circle.js",
+            "assets/js/MU/Canvas/Shape/Rectangle.js",
+            "assets/js/MU/Canvas/Size.js",
+            "assets/js/MU/Canvas.js",
+            "assets/js/MU/Core/Game/Snake/Segment.js",
+            "assets/js/MU/Core/Game/Snake.js",
+            "assets/js/MU/Core/Game/Score.js",
+            "assets/js/MU/Core/Game/control.js",
+            "assets/js/MU/Core/Game.js",
+            "assets/js/MU/Core.js",
+            "assets/js/index.js"
+        ]
+    }
+}

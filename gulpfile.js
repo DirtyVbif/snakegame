@@ -43,16 +43,34 @@ const src = {
     cssMin       = require('gulp-csso'),
     concat       = require('gulp-concat'),
     addHeader    = require('gulp-header'),
-    streamqueue  = require('streamqueue'),
-    // addFooter    = require('gulp-footer'),
-    webp = require('gulp-webp');
+    webp         = require('gulp-webp'),
+    fs           = require('fs');
+
+let sources;
+
+function initialize () {
+    return new Promise(
+        (resolve, reject) =>
+        {
+            fs.readFile(
+                'assets/sources.json',
+                'utf-8',
+                (error, data) =>
+                {
+                    sources = JSON.parse(data);
+                    resolve();
+                }
+            )
+        }
+    );
+}
 
 // =====================================================================
 //clean target directories
 function clean() {
     return delFiles([
         src.dest.pub + 'css/',
-        src.dest.pub + 'js/'
+        sources.js.directory
     ], {
         force: true
     });
@@ -87,17 +105,11 @@ function watch_css() {
 // =====================================================================
 // minifine and put main.js scripts into target directories
 function js() {
-    return streamqueue(
-            { objectMode: true },
-            gulp.src(src.assets.js[0]),
-            gulp.src(src.assets.js[1])
-        )
-        // gulp.src(src.assets.js, opt.src)
-        .pipe(concat('script.js'))
+    return gulp.src(sources.js.files)
+        .pipe(concat(sources.js.name))
         .pipe(addHeader('"use strict";\n'))
         // .pipe(minifyJS())
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest(src.dest.pub + 'js/'));
+        .pipe(gulp.dest(sources.js.directory));
 }
 
 // =====================================================================
@@ -124,6 +136,7 @@ function watch_img() {
 // =====================================================================
 // BUILD TASKS
 exports.default = gulp.series(
+    initialize,
     clean,
     gulp.parallel(
         css, js, img

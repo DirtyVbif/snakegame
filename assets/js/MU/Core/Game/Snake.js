@@ -52,8 +52,6 @@ class MUCoreGameSnake
             this.#segments.push(segment);
             this.#move(start, this.#direction * -1);
         }
-
-        console.log(this.#segments);
     }
 
     /**
@@ -127,5 +125,10 @@ class MUCoreGameSnake
         }
 
         return direction && !this.#isVertical(direction);
+    }
+
+    render ()
+    {
+
     }
 }

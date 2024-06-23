@@ -4,8 +4,27 @@
     {
         width: 100%;
         margin-bottom: 15px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    &__control
+    {
+        &_action
+        {
+            width: 100px;
+        }
+    }
+
+    &__score {
+        &-value {
+            width: 60px;
+        }
     }
 
     &__canvas
-    {}
+    {
+        box-shadow: 0 0 4px inset #b7b8b9;
+        border-radius: 3px;
+    }
 }

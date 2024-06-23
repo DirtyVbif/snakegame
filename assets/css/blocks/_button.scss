@@ -1,0 +1,87 @@
+$button:         #4f946a;
+$button_hover:   #569f72;
+$button_active:  #4f8a66;
+$button_disable: #b0b9bb;
+
+.button,
+button.button
+{
+    padding:          6px 12px;
+    color:            white;
+    border:           2px solid $button;
+    background-color: $button;
+    text-align:       center;
+    cursor:           pointer;
+    transition:       $transition;
+    border-radius:    4px;
+
+    &:hover,
+    &:focus
+    {
+        background-color: $button_hover;
+        border-color:     $button_hover;
+    }
+
+    &:active
+    {
+        background-color: $button_active;
+        border-color:     $button_active;
+    }
+
+    &:disabled
+    {
+        color:            white;
+        background-color: $button_disable;
+        border-color:     $button_disable;
+        cursor:           not-allowed;
+    }
+
+    &_outline
+    {
+        background:  0;
+        color:       $button;
+        font-weight: bold;
+        font-size:   0.9em;
+
+        &:hover,
+        &:focus
+        {
+            color: $button_hover;
+        }
+
+        &:active
+        {
+            color: $button_active;
+        }
+
+        &:disabled
+        {
+            background:   0;
+            border-color: $button_disable;
+            color:        $button_disable;
+        }
+    }
+
+    &_left
+    {
+        border-top-right-radius:    0;
+        border-bottom-right-radius: 0;
+        border-right:               0;
+        margin-right:               2px;
+    }
+
+    &_center
+    {
+        border-radius: 0;
+        border-left:   0;
+        border-right:  0;
+    }
+
+    &_right
+    {
+        border-top-left-radius:    0;
+        border-bottom-left-radius: 0;
+        border-left:               0;
+        margin-left:               2px;
+    }
+}

@@ -4,9 +4,7 @@ class MUCoreGameScore
     {
         return {
             selector: {
-                field: '#board-score',
-                label: '.board__score-label',
-                input: '.board__score-value'
+                input: '#board-score-value'
             }
         };
     }
@@ -15,8 +13,6 @@ class MUCoreGameScore
      * @type {MUCoreGame}
      */
     #game;
-
-    #label;
 
     /**
      * @type {HTMLInputElement}
@@ -37,7 +33,6 @@ class MUCoreGameScore
 
     initialize ()
     {
-        this.#label = this.#game.board.querySelector(this.s.selector.label);
         this.#input = this.#game.board.querySelector(this.s.selector.input);
     }
 

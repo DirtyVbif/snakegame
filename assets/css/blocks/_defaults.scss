@@ -1,36 +1,54 @@
-.hidden {
-    display: none!important;
+.hidden
+{
+    display: none !important;
 }
 
-.visually-hidden {
+.visually-hidden
+{
     visibility: hidden;
-    position: absolute;
-    z-index: -999;
-    left: -9999px;
+    position:   absolute;
+    z-index:    -999;
+    left:       -9999px;
 }
 
-.cl {
+.cl
+{
     @include cl();
 }
 
 .unpublished,
-.published {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
+.published
+{
+    display:       inline-block;
+    width:         16px;
+    height:        16px;
     border-radius: $radius;
-    border: 1px solid $grey_light;
+    border:        1px solid $grey_light;
 }
 
-.published {
+.published
+{
     border-color: $grey_strong;
-    text-align: center;
-    &::after {
-        color: $grey_strong;
+    text-align:   center;
+
+    &::after
+    {
+        color:   $grey_strong;
         content: "✓";
     }
 }
 
-.bold {
+.bold
+{
     font-weight: bold;
+}
+
+button.inherit,
+input.inherit
+{
+    border: 0;
+    font: inherit;
+    color: inherit;
+    background: 0;
+    outline: 0;
 }

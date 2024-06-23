@@ -4,7 +4,8 @@ class MUCoreGameControl
     {
         return {
             selector: {
-                action: '#board-action'
+                action: '#board-action',
+                size:   '.board__control_size'
             },
             speed: {
                 max: 12,
@@ -16,7 +17,12 @@ class MUCoreGameControl
                     play:  'Pause',
                     pause: 'Resume'
                 }
-            }
+            },
+            sizes: [
+                [32, 24],
+                [32, 32],
+                [48, 32],
+            ]
         }
     }
 
@@ -28,6 +34,8 @@ class MUCoreGameControl
             PAUSE: 2
         }
     }
+
+    #initialized = false;
 
     /**
      * @type {MUCoreGame}
@@ -50,6 +58,13 @@ class MUCoreGameControl
     #status;
 
     /**
+     * @type {NodeListOf<HTMLButtonElement>}
+     */
+    #size_controls;
+
+    #selected_size = 1;
+
+    /**
      * @returns {HTMLButtonElement}
      */
     get action ()
@@ -65,6 +80,9 @@ class MUCoreGameControl
         return this.#speed;
     }
 
+    /**
+     * @returns {boolean}
+     */
     get speed_up ()
     {
         if (this.#speed < this.s.speed.max) {
@@ -76,6 +94,9 @@ class MUCoreGameControl
         return false;
     }
 
+    /**
+     * @returns {boolean}
+     */
     get speed_down ()
     {
         if (this.#speed > this.s.speed.min) {
@@ -87,24 +108,49 @@ class MUCoreGameControl
         return false;
     }
 
+    /**
+     * @returns {number}
+     */
     get status ()
     {
         return this.#status;
     }
 
+    /**
+     * @returns {boolean}
+     */
     get is_play ()
     {
         return this.#status === this.STATUS.PLAY;
     }
 
+    /**
+     * @returns {boolean}
+     */
     get is_stop ()
     {
         return this.#status === this.STATUS.STOP;
     }
 
+    /**
+     * @returns {boolean}
+     */
     get is_pause ()
     {
         return this.#status === this.STATUS.PAUSE;
+    }
+
+    /**
+     * @returns {NodeListOf<HTMLButtonElement>}
+     */
+    get sizes ()
+    {
+        return this.#size_controls;
+    }
+
+    get selected_size ()
+    {
+        return this.s.sizes[this.#selected_size];
     }
 
     constructor (game)
@@ -114,13 +160,35 @@ class MUCoreGameControl
 
     initialize ()
     {
-        this.#action = this.#game.board.querySelector(this.s.selector.action);
+        if (!this.#initialized) {
+            this.#action        = this.#game.board.querySelector(this.s.selector.action);
+            this.#size_controls = this.#game.board.querySelectorAll(this.s.selector.size);
+            this.#size_controls.forEach(
+                (control, i) =>
+                {
+                    let size = this.s.sizes[i];
+
+                    if (!size) {
+                        throw new Error("Unknown game board size: " + control.innerText);
+                    }
+
+                    control.innerText = size[0] + 'x' + size[1];
+
+                    MUDoc.onclick(
+                        control,
+                        () => this.#selectSize(i)
+                    );
+                }
+            )
+            this.#initialized = true;
+        }
     }
 
     setStatePlay ()
     {
         this.#status = this.STATUS.PLAY;
         this.#action.innerText = this.s.action.state.play;
+        this.#sizeDisabled(true);
     }
 
     setStatePause ()
@@ -140,5 +208,18 @@ class MUCoreGameControl
         this.#status = this.STATUS.STOP;
         this.#action.innerText = this.s.action.state.stop;
         this.#action.disabled = false;
+        this.#sizeDisabled(false);
+    }
+
+    #sizeDisabled (statement)
+    {
+        this.#size_controls.forEach(
+            control => control.disabled = statement
+        );
+    }
+
+    #selectSize (index)
+    {
+        this.#selected_size = index;
     }
 }

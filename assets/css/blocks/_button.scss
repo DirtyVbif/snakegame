@@ -1,6 +1,6 @@
 $button:         #4f946a;
-$button_hover:   #569f72;
-$button_active:  #4f8a66;
+$button_hover:   #5ea97b;
+$button_active:  #518565;
 $button_disable: #b0b9bb;
 
 .button,
@@ -38,27 +38,29 @@ button.button
 
     &_outline
     {
-        background:  0;
-        color:       $button;
-        font-weight: bold;
-        font-size:   0.9em;
+        background-color: transparent;
+        color:            $button;
+        font-weight:      bold;
+        font-size:        0.9em;
 
         &:hover,
         &:focus
         {
-            color: $button_hover;
+            background-color: transparent;
+            color:            $button_hover;
         }
 
         &:active
         {
-            color: $button_active;
+            background-color: transparent;
+            color:            $button_active;
         }
 
         &:disabled
         {
-            background:   0;
-            border-color: $button_disable;
-            color:        $button_disable;
+            background-color: transparent;
+            border-color:     $button_disable;
+            color:            $button_disable;
         }
     }
 

@@ -1,7 +1,7 @@
 <div class="board flex flex_center flex_column" id="board">
     <header class="board__controls flex flex_between">
         <button id="board-action" class="inherit button board__control board__control_action" disabled>Loading</button>
-        <div class="flex board__grid" id="board-control-size">
+        <div class="flex board__grid" id="board-control-sizes">
             <button class="inherit button button_outline button_left board__control board__control_size" disabled>24x18</button>
             <button class="inherit button button_outline button_center board__control board__control_size" disabled>32x32</button>
             <button class="inherit button button_outline button_right board__control board__control_size" disabled>48x32</button>

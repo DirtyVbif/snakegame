@@ -1,48 +1,28 @@
 class MUCoreGame
 {
-    get STATUS ()
-    {
-        return {
-            STOP:  0,
-            PLAY:  1,
-            PAUSE: 2
-        }
-    }
-
     /**
      * @type {HTMLElement}
      */
     #board;
 
     /**
-     * @type {HTMLButtonElement}
+     * @type {MUCoreGameControl}
      */
-    #action_start;
-
-    #status = this.STATUS.STOP;
+    #control;
 
     /**
      * @type {MUCoreGameSnake}
      */
     #snake;
 
-    #speed = 1;
+    /**
+     * @type {MUCoreGameScore}
+     */
+    #score;
 
-    #score = 0;
-
-    get is_play ()
+    get board ()
     {
-        return this.#status === this.STATUS.PLAY;
-    }
-
-    get is_stop ()
-    {
-        return this.#status === this.STATUS.STOP;
-    }
-
-    get is_pause ()
-    {
-        return this.#status === this.STATUS.PAUSE;
+        return this.#board;
     }
 
     /**
@@ -63,13 +43,17 @@ class MUCoreGame
 
     #initializeControls ()
     {
-        this.#action_start = this.#board.querySelector('#board-play');
+        this.#control = new MUCoreGameControl(this);
+        this.#control.initialize();
+
+        this.#score = new MUCoreGameScore(this);
+        this.#score.initialize();
     }
 
     #initializeEvents ()
     {
         MUDoc.onclick(
-            this.#action_start,
+            this.#control.action,
             event => this.#start(event)
         );
     }
@@ -83,7 +67,7 @@ class MUCoreGame
     {
         event.preventDefault();
 
-        if (this.is_play) {
+        if (this.#control.is_play) {
             this.pause();
         } else {
             this.start();
@@ -92,40 +76,40 @@ class MUCoreGame
 
     start ()
     {
-        if (this.is_stop) {
+        if (this.#control.is_stop) {
             this.#startNew();
-        } else if (this.is_pause) {
+        } else if (this.#control.is_pause) {
             this.resume()
         }
     }
 
     pause ()
     {
-        if (!this.is_play) {
-            return;
+        if (this.#control.is_play) {
+            this.#control.setStatePause();
         }
-        this.#status = this.STATUS.PAUSE;
     }
 
     resume ()
     {
-        this.#status = this.STATUS.PLAY;
+        if (this.#control.is_pause) {
+            this.#control.setStatePlay();
+        }
     }
 
     stop ()
     {
-        if (this.is_stop) {
-            return;
-        }
-        this.#status = this.STATUS.STOP;
+        if (!this.#control.is_stop) {
+            this.#control.setStateStop();
 
-        // TODO: remove control events handler
+            // TODO: remove control events handler
+        }
     }
 
     #startNew ()
     {
-        this.#status = this.STATUS.PLAY;
-        this.#score = 0;
+        this.#control.setStatePlay();
+        this.#score.reset();
         this.#snake = new MUCoreGameSnake();
 
         // TODO: initialize selected speed
@@ -138,5 +122,7 @@ class MUCoreGame
     #viewStartScreen ()
     {
         // TODO: render first screen
+        this.#control.setInitialState();
+        this.#loading(false);
     }
 }

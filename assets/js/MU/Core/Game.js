@@ -39,6 +39,7 @@ class MUCoreGame
         this.#initializeControls();
         this.#initializeEvents();
         this.#viewStartScreen();
+        this.#loading(false);
     }
 
     #initializeControls ()
@@ -55,6 +56,10 @@ class MUCoreGame
         MUDoc.onclick(
             this.#control.action,
             event => this.#start(event)
+        );
+
+        this.#control.onresize(
+            (width, height) => MUCore.canvas.size.grid(width, height)
         );
     }
 
@@ -110,7 +115,7 @@ class MUCoreGame
     {
         this.#control.setStatePlay();
         this.#score.reset();
-        this.#snake = new MUCoreGameSnake();
+        this.#setSnakeInitialState();
 
         // TODO: initialize selected speed
 
@@ -122,7 +127,13 @@ class MUCoreGame
     #viewStartScreen ()
     {
         // TODO: render first screen
+        MUCore.canvas.size.grid(...this.#control.selected_size);
         this.#control.setInitialState();
-        this.#loading(false);
+    }
+
+    #setSnakeInitialState ()
+    {
+        this.#snake = new MUCoreGameSnake();
+        this.#snake.setInitialState();
     }
 }

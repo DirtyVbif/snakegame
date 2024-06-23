@@ -5,7 +5,7 @@ class MUCoreGameControl
         return {
             selector: {
                 action: '#board-action',
-                size:   '.board__control_size'
+                size: '.board__control_size'
             },
             speed: {
                 max: 12,
@@ -13,15 +13,15 @@ class MUCoreGameControl
             },
             action: {
                 state: {
-                    stop:  'Play',
-                    play:  'Pause',
+                    stop: 'Play',
+                    play: 'Pause',
                     pause: 'Resume'
                 }
             },
             sizes: [
-                [32, 24],
-                [32, 32],
-                [48, 32],
+                [33, 25],
+                [33, 33],
+                [49, 33],
             ],
             default_size: 1,
             class: {
@@ -67,6 +67,11 @@ class MUCoreGameControl
     #size_controls;
 
     #selected_size;
+
+    /**
+     * @type {function[]}
+     */
+    #on_resize = [];
 
     /**
      * @returns {HTMLButtonElement}
@@ -191,28 +196,28 @@ class MUCoreGameControl
 
     setStatePlay ()
     {
-        this.#status = this.STATUS.PLAY;
+        this.#status           = this.STATUS.PLAY;
         this.#action.innerText = this.s.action.state.play;
         this.#sizeDisabled(true);
     }
 
     setStatePause ()
     {
-        this.#status = this.STATUS.PAUSE;
+        this.#status           = this.STATUS.PAUSE;
         this.#action.innerText = this.s.action.state.pause;
     }
 
     setStateStop ()
     {
-        this.#status = this.STATUS.STOP;
+        this.#status           = this.STATUS.STOP;
         this.#action.innerText = this.s.action.state.stop;
     }
 
     setInitialState ()
     {
-        this.#status = this.STATUS.STOP;
+        this.#status           = this.STATUS.STOP;
         this.#action.innerText = this.s.action.state.stop;
-        this.#action.disabled = false;
+        this.#action.disabled  = false;
         this.#sizeDisabled(false);
     }
 
@@ -225,14 +230,34 @@ class MUCoreGameControl
 
     #selectSize (index)
     {
-        this.#selected_size = index;
-        this.#size_controls.forEach(
-            (control, i) =>
+        if (this.#selected_size !== index) {
+            this.#selected_size = index;
+            this.#size_controls.forEach(
+                (control, i) =>
+                {
+                    if (i === index) {
+                        control.classList.add(this.s.class.active);
+                    } else {
+                        control.classList.remove(this.s.class.active);
+                    }
+                }
+            );
+            this.#resizeEvaluate();
+        }
+    }
+
+    onresize (callback)
+    {
+        this.#on_resize.push(callback);
+    }
+
+    #resizeEvaluate ()
+    {
+        this.#on_resize.forEach(
+            callback =>
             {
-                if (i === index) {
-                    control.classList.add(this.s.class.active);
-                } else {
-                    control.classList.remove(this.s.class.active);
+                if (typeof callback === 'function') {
+                    callback(...this.selected_size);
                 }
             }
         );

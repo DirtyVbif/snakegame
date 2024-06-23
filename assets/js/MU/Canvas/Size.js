@@ -26,6 +26,16 @@ class MUCanvasSize
         return this.#canvas.height;
     }
 
+    get grid_width ()
+    {
+        return this.#grid.width;
+    }
+
+    get grid_height ()
+    {
+        return this.#grid.height;
+    }
+
     get #parent_width_changed ()
     {
         let width   = parseFloat(this.parent_styles.width),

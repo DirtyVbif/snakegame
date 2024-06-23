@@ -1,9 +1,5 @@
-class MUCanvasShape
+class MUCanvasShape extends MUCanvasDummy
 {
-    #x = 0;
-
-    #y = 0;
-
     #color = '#ffffff';
 
     /**
@@ -21,16 +17,6 @@ class MUCanvasShape
         return new MUCanvasShapeRectangle();
     }
 
-    get x ()
-    {
-        return this.#x;
-    }
-
-    get y ()
-    {
-        return this.#y;
-    }
-
     /**
      * @returns {MUCanvasShapeBorder}
      */
@@ -41,28 +27,6 @@ class MUCanvasShape
         }
 
         return this.#border;
-    }
-
-    pos (x_position, y_position)
-    {
-        this.posX(x_position)
-            .posY(y_position);
-
-        return this;
-    }
-
-    posX (x_position)
-    {
-        this.#x = x_position;
-
-        return this;
-    }
-
-    posY (y_position)
-    {
-        this.#y = y_position;
-
-        return this;
     }
 
     fill (color = undefined)

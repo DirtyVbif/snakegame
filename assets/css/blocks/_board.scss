@@ -2,9 +2,9 @@
 {
     &__controls
     {
-        width: 100%;
+        width:         100%;
         margin-bottom: 15px;
-        padding-left: 30px;
+        padding-left:  30px;
         padding-right: 30px;
     }
 
@@ -14,17 +14,29 @@
         {
             width: 100px;
         }
+
+        &_size
+        {
+            &.active:not(:disabled)
+            {
+                border-color: $blue_light;
+                color:        $blue_light;
+                cursor: default;
+            }
+        }
     }
 
-    &__score {
-        &-value {
+    &__score
+    {
+        &-value
+        {
             width: 60px;
         }
     }
 
     &__canvas
     {
-        box-shadow: 0 0 4px inset #b7b8b9;
+        box-shadow:    0 0 4px inset #b7b8b9;
         border-radius: 3px;
     }
 }

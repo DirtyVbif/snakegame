@@ -22,7 +22,11 @@ class MUCoreGameControl
                 [32, 24],
                 [32, 32],
                 [48, 32],
-            ]
+            ],
+            default_size: 1,
+            class: {
+                active: 'active'
+            }
         }
     }
 
@@ -62,7 +66,7 @@ class MUCoreGameControl
      */
     #size_controls;
 
-    #selected_size = 1;
+    #selected_size;
 
     /**
      * @returns {HTMLButtonElement}
@@ -180,6 +184,7 @@ class MUCoreGameControl
                     );
                 }
             )
+            this.#selectSize(this.s.default_size);
             this.#initialized = true;
         }
     }
@@ -221,5 +226,15 @@ class MUCoreGameControl
     #selectSize (index)
     {
         this.#selected_size = index;
+        this.#size_controls.forEach(
+            (control, i) =>
+            {
+                if (i === index) {
+                    control.classList.add(this.s.class.active);
+                } else {
+                    control.classList.remove(this.s.class.active);
+                }
+            }
+        );
     }
 }

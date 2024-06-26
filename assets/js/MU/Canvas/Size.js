@@ -5,8 +5,6 @@ class MUCanvasSize
      */
     #canvas;
 
-    #step = 100;
-
     #grid = {
         min:    10,
         width:  24,
@@ -14,7 +12,9 @@ class MUCanvasSize
         locked: false
     };
 
-    #parent_resized_width = 0;
+    #available_height = 0;
+
+    #available_width = 0;
 
     get width ()
     {
@@ -36,19 +36,14 @@ class MUCanvasSize
         return this.#grid.height;
     }
 
-    get #parent_width_changed ()
-    {
-        let width   = parseFloat(this.parent_styles.width),
-            changed = width !== this.#parent_resized_width;
-
-        this.#parent_resized_width = width;
-
-        return changed;
-    }
-
     get parent_styles ()
     {
         return getComputedStyle(this.#canvas.parentElement);
+    }
+
+    get is_square ()
+    {
+        return this.#grid.width === this.#grid.height;
     }
 
     /**
@@ -61,33 +56,43 @@ class MUCanvasSize
 
     update ()
     {
-        if (this.#parent_width_changed) {
-            let free_space = this.#calculateFreeSpace(),
-                steps      = Math.floor(free_space / this.#step),
-                size       = this.#step * steps;
+        this.#calculateFreeSpace();
+        this.#updateSize();
 
-            this.#setWidth(size);
-        }
+        return this;
     }
 
     /**
-     * @returns {number}
+     * @returns {void}
      */
     #calculateFreeSpace ()
     {
         let styles = this.parent_styles;
 
-        return parseFloat(styles.width)
+        this.#available_width = parseFloat(styles.width)
             - parseFloat(styles.borderLeftWidth)
             - parseFloat(styles.borderRightWidth)
             - parseFloat(styles.paddingLeft)
             - parseFloat(styles.paddingRight);
+
+        this.#available_height = window.innerHeight - 80;
     }
 
-    #setWidth (width)
+    #updateSize ()
     {
-        this.#canvas.width = width;
-        this.#updateHeight();
+        if (this.is_square) {
+            this.#canvas.width = this.#canvas.height = Math.min(this.#available_width, this.#available_height);
+
+            return;
+        }
+        let target_height = this.#available_width / this.#grid.width * this.#grid.height;
+        if (target_height > this.#available_height) {
+            this.#canvas.height = this.#available_height;
+            this.#canvas.width = this.#available_height / this.#grid.height * this.#grid.width;
+        } else {
+            this.#canvas.width = this.#available_width;
+            this.#canvas.height = target_height;
+        }
     }
 
     grid (width, height = undefined)
@@ -95,16 +100,9 @@ class MUCanvasSize
         if (!this.#grid.locked) {
             this.#grid.width  = Math.max(width, this.#grid.min);
             this.#grid.height = Math.max(height || width, this.#grid.min);
-            this.#updateHeight();
+            this.update();
         }
 
         return this;
-    }
-
-    #updateHeight ()
-    {
-        this.#canvas.height = (this.#grid.width === this.#grid.height)
-            ? this.width
-            : this.width / this.#grid.width * this.#grid.height
     }
 }

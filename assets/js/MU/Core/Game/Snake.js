@@ -129,13 +129,13 @@ class MUCoreGameSnake
 
     render ()
     {
-        let size = this.#getSegmentSize();
-        this.#segments.forEach(
-            segment =>
-            {
-                segment.size(size)
-                    .render(MUCore.canvas.context);
-            }
-        );
+        // let size = this.#getSegmentSize();
+        // this.#segments.forEach(
+        //     segment =>
+        //     {
+        //         segment.size(size)
+        //             .render(MUCore.canvas.context);
+        //     }
+        // );
     }
 }

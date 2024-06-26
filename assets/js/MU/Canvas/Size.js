@@ -16,6 +16,8 @@ class MUCanvasSize
 
     #available_width = 0;
 
+    #cell_size;
+
     get width ()
     {
         return this.#canvas.width;
@@ -46,6 +48,15 @@ class MUCanvasSize
         return this.#grid.width === this.#grid.height;
     }
 
+    get cell_size ()
+    {
+        if (typeof this.#cell_size === 'undefined') {
+            this.#cell_size = this.#canvas.width / this.#grid.width;
+        }
+
+        return this.#cell_size;
+    }
+
     /**
      * @param {HTMLCanvasElement} canvas
      */
@@ -58,6 +69,7 @@ class MUCanvasSize
     {
         this.#calculateFreeSpace();
         this.#updateSize();
+        this.#cell_size = undefined;
 
         return this;
     }

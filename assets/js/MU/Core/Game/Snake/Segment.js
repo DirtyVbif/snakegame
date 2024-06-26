@@ -56,6 +56,12 @@ class MUCoreGameSnakeSegment extends MUCanvasDummy
 
     render (context)
     {
+        let size = MUCore.canvas.size.cell_size;
 
+        let x = size * (this.x - 1) + 1,
+            y = size * (this.y - 1) + 1;
+
+        context.fillStyle = '#9b4335';
+        context.fillRect(x, y, size - 2, size - 2);
     }
 }

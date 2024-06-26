@@ -47,11 +47,19 @@ class MUCoreGameSnake
         );
 
         for (let i = 0; i < this.#size; ++i) {
-            let segment = new MUCoreGameSnakeSegment();
-            segment.pos(start);
-            this.#segments.push(segment);
+            this.#createSegment(start);
             this.#move(start, this.#direction * -1);
         }
+    }
+
+    #createSegment (inherit)
+    {
+        let segment = new MUCoreGameSnakeSegment();
+
+        segment.pos(inherit);
+        this.#segments.push(segment);
+
+        MUCore.canvas.shape('seg' + this.#segments.length, segment);
     }
 
     /**
@@ -91,11 +99,11 @@ class MUCoreGameSnake
             handler;
 
         if (this.#isVertical(direction)) {
-            max = MUCore.canvas.size.height;
+            max = MUCore.canvas.size.grid_height;
             current = point.y;
             handler = point.posY.bind(point);
         } else if (this.#isHorizontal(direction)) {
-            max = MUCore.canvas.size.width;
+            max = MUCore.canvas.size.grid_width;
             current = point.x;
             handler = point.posX.bind(point);
         } else {
@@ -127,15 +135,20 @@ class MUCoreGameSnake
         return direction && !this.#isVertical(direction);
     }
 
-    render ()
+    move (grow = false)
     {
-        // let size = this.#getSegmentSize();
-        // this.#segments.forEach(
-        //     segment =>
-        //     {
-        //         segment.size(size)
-        //             .render(MUCore.canvas.context);
-        //     }
-        // );
+        let last = this.#segments.length - 1;
+
+        if (grow) {
+            this.#createSegment(this.#segments[last]);
+        }
+
+        for (let i = last; i >= 0; --i) {
+            if (i) {
+                this.#segments[i].pos(this.#segments[i - 1])
+            } else {
+                this.#move(this.#segments[i], this.#direction);
+            }
+        }
     }
 }

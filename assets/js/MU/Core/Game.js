@@ -116,6 +116,7 @@ class MUCoreGame
         this.#control.setStatePlay();
         this.#score.reset();
         this.#setSnakeInitialState();
+        this.#createTicker();
 
         // TODO: initialize selected speed
 
@@ -135,5 +136,17 @@ class MUCoreGame
     {
         this.#snake = new MUCoreGameSnake();
         this.#snake.setInitialState();
+    }
+
+    #createTicker ()
+    {
+        setInterval(
+            () =>
+            {
+                this.#snake.move();
+                MUCore.canvas.redraw();
+            },
+            500
+        );
     }
 }
